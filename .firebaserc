@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "swiftsupport-dev",
+    "production": "swiftsupport-prod",
+    "development": "swiftsupport-dev"
+  },
+  "targets": {},
+  "etags": {}
+}

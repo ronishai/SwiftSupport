@@ -1,0 +1,125 @@
+{
+  "name": "@swift-support/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "nx": {
+    "targets": {
+      "prune-lockfile": {
+        "dependsOn": [
+          "build"
+        ],
+        "cache": true,
+        "executor": "@nx/js:prune-lockfile",
+        "outputs": [
+          "{workspaceRoot}/apps/api/dist/package.json",
+          "{workspaceRoot}/apps/api/dist/pnpm-lock.yaml"
+        ],
+        "options": {
+          "buildTarget": "build"
+        }
+      },
+      "copy-workspace-modules": {
+        "dependsOn": [
+          "build"
+        ],
+        "cache": true,
+        "outputs": [
+          "{workspaceRoot}/apps/api/dist/workspace_modules"
+        ],
+        "executor": "@nx/js:copy-workspace-modules",
+        "options": {
+          "buildTarget": "build"
+        }
+      },
+      "prune": {
+        "dependsOn": [
+          "prune-lockfile",
+          "copy-workspace-modules"
+        ],
+        "executor": "nx:noop"
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@swift-support/api:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@swift-support/api:build:development"
+          },
+          "production": {
+            "buildTarget": "@swift-support/api:build:production"
+          }
+        }
+      },
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "main": "apps/api/src/main.ts",
+          "outputPath": "apps/api/dist",
+          "platform": "node",
+          "bundle": true,
+          "tsConfig": "apps/api/tsconfig.app.json",
+          "esbuildConfig": "apps/api/esbuild.config.cjs"
+        },
+        "configurations": {
+          "development": {
+            "optimization": false,
+            "sourceMap": true
+          },
+          "production": {
+            "optimization": true,
+            "sourceMap": false
+          }
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/event-emitter": "^3.1.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/throttler": "^6.5.0",
+    "@swift-support/shared": "workspace:*",
+    "@types/nodemailer": "^8.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "dotenv": "^17.4.2",
+    "firebase-admin": "^13.9.0",
+    "nodemailer": "^9.0.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.0",
+    "@types/node": "20.19.9",
+    "esbuild-plugin-tsc": "^0.6.0"
+  },
+  "scripts": {
+    "serve": "nx run @swift-support/api:serve"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@swift-support/source": "./src/main.ts",
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    }
+  },
+  "types": "./dist/main.d.ts",
+  "module": "./dist/main.js",
+  "main": "./dist/main.js"
+}
