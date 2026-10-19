@@ -2,7 +2,6 @@ import { cert, initializeApp } from 'firebase-admin/app';
 import { Module } from '@nestjs/common';
 import { FirebaseService } from './firebase.service.ts';
 
-// @Global()
 @Module({
   providers: [
     {

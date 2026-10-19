@@ -9,13 +9,16 @@ import { useLocale } from '../hooks/useLocale';
 import { useSettings } from '../hooks/useSettings';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import type { Priority } from '@swift-support/shared';
+import type { translations } from '../lib/i18n';
 
-const PRIORITIES: Record<Priority, { en: string; he: string }> = {
-  low: { en: 'Low', he: 'נמוכה' },
-  medium: { en: 'Medium', he: 'בינונית' },
-  high: { en: 'High', he: 'גבוהה' },
-  critical: { en: 'Critical', he: 'קריטית' },
-};
+type I18nKey = keyof (typeof translations)['en'];
+
+const PRIORITY_KEYS: { value: Priority; label: I18nKey }[] = [
+  { value: 'low', label: 'priorityLow' },
+  { value: 'medium', label: 'priorityMedium' },
+  { value: 'high', label: 'priorityHigh' },
+  { value: 'critical', label: 'priorityCritical' },
+];
 
 export default function TicketForm() {
   const { data: settings } = useSettings();
@@ -266,9 +269,9 @@ export default function TicketForm() {
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as Priority)}
               >
-                {Object.entries(PRIORITIES).map(([value, label]) => (
+                {PRIORITY_KEYS.map(({ value, label }) => (
                   <option key={value} value={value}>
-                    {label[lang as 'en' | 'he']}
+                    {t(label)}
                   </option>
                 ))}
               </Select>

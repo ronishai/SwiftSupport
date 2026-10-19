@@ -51,7 +51,7 @@ export class NotificationsService {
           pass,
         },
         tls: {
-          rejectUnauthorized: false, // Prevents certificate issues during development/local tests
+          rejectUnauthorized: false,
         },
       });
 
@@ -84,7 +84,6 @@ export class NotificationsService {
     try {
       const subject = `[SwiftSupport Helpdesk] עדכון פנייה / Ticket Update: ${ticket.title}`;
       const change: TicketChange = { changeType, previousValue, newValue };
-      // fetch current labels from settings so notifications reflect admin-managed config
       const cfg = await this.settings.getConfig();
       const categoryLabels: Record<string, string> = Object.fromEntries(
         cfg.categories.map((c) => [c.id, c.label.he || c.label.en]),

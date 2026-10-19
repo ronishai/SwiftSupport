@@ -76,7 +76,7 @@ export default function TicketModal({ ticket, onClose }: Props) {
       <button
         onClick={onClose}
         className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'} text-slate-400 hover:text-slate-600 transition-all duration-200 w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100`}
-        aria-label="Close modal"
+        aria-label={t('closeModal')}
       >
         <svg
           className="w-5 h-5"

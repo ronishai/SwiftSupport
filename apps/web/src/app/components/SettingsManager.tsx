@@ -199,11 +199,7 @@ export default function SettingsManager() {
   }
 
   async function deleteCategory(idToDelete: string) {
-    const confirmMsg =
-      lang === 'he'
-        ? 'האם אתה בטוח שברצונך למחוק קטגוריה זו?'
-        : 'Are you sure you want to delete this category?';
-    if (!window.confirm(confirmMsg)) return;
+    if (!window.confirm(t('confirmDeleteCategory'))) return;
 
     setMessage('');
     setError('');
@@ -231,11 +227,7 @@ export default function SettingsManager() {
   }
 
   async function deleteTeam(idToDelete: string) {
-    const confirmMsg =
-      lang === 'he'
-        ? 'האם אתה בטוח שברצונך למחוק צוות זה?'
-        : 'Are you sure you want to delete this team?';
-    if (!window.confirm(confirmMsg)) return;
+    if (!window.confirm(t('confirmDeleteTeam'))) return;
 
     setMessage('');
     setError('');
@@ -243,7 +235,6 @@ export default function SettingsManager() {
     try {
       const nextTeams = teams.filter((t) => t.id !== idToDelete);
 
-      // Also clean up this team from any categories that assign it
       const nextCategories = categories.map((cat) => ({
         ...cat,
         teams: (cat.teams || []).filter((tId) => tId !== idToDelete),
@@ -432,7 +423,7 @@ export default function SettingsManager() {
             {t('category')}
           </h5>
           {isLoading ? (
-            <p className="text-sm text-slate-400">Loading...</p>
+            <p className="text-sm text-slate-400">{t('loading')}</p>
           ) : (
             <ul className="space-y-3 text-sm text-slate-700">
               {categories.map((category) => (
@@ -483,7 +474,7 @@ export default function SettingsManager() {
             {t('createTeam')}
           </h5>
           {isLoading ? (
-            <p className="text-sm text-slate-400">Loading...</p>
+            <p className="text-sm text-slate-400">{t('loading')}</p>
           ) : (
             <ul className="space-y-3 text-sm text-slate-700">
               {teams.map((team) => (

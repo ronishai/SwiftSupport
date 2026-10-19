@@ -15,7 +15,6 @@ export class CreateAdminDto {
   @IsString()
   @IsNotEmpty({ message: 'סיסמה היא שדה חובה' })
   @MinLength(8, { message: 'הסיסמה חייבת להכיל לפחות 8 תווים' })
-  // Regex: 1 uppercase, 1 number, 1 special character
   @Matches(
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/,
     {

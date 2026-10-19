@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/authStore';
 import { auth } from '../lib/firebase';
 import { onAuthStateChanged, getIdTokenResult } from 'firebase/auth';
 import type { AppUser } from '@swift-support/shared';
-// FirebaseError import removed — not used
+
 
 export function useAuth() {
   const setUser = useAuthStore((state) => state.setUser);
